@@ -56,14 +56,14 @@ def max(x, y):
     ":math:`f(x) =` x if x is greater than y else y"
     # TODO: Implement for Task 0.1.
     return x if x > y else y
-    raise NotImplementedError('Need to implement for Task 0.1')
+    # raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def is_close(x, y):
     ":math:`f(x) = |x - y| < 1e-2` "
     # TODO: Implement for Task 0.1.
     return True if abs(x - y) < 1e-2 else False
-    raise NotImplementedError('Need to implement for Task 0.1')
+    # raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def sigmoid(x):
@@ -179,23 +179,23 @@ def map(fn):
     def actual_map(list):
         new_list = []
         for x in list:
+            if x == 0.0:
+                new_list.append(x)
+                continue
             new_list.append(fn(x))
         
         list = new_list
-        return actual_map
-    # raise NotImplementedError('Need to implement for Task 0.3')
+        return new_list
+    return actual_map
 
 
 def negList(ls):
     "Use :func:`map` and :func:`neg` to negate each element in `ls`"
     # TODO: Implement for Task 0.3.
     if ls == []:
-        pass
-    print(ls)
-    neg_func = map(neg)
-    print(neg_func(ls))
-    # return neg_func(ls)
-    # raise NotImplementedError('Need to implement for Task 0.3')
+        return ls
+    neg_func = map(neg) 
+    return neg_func(ls)
 
 
 def zipWith(fn):
@@ -215,13 +215,24 @@ def zipWith(fn):
 
     """
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    def map2(ls1, ls2):
+        assert len(ls1) == len(ls2)
+        new_list = []
+        for i in range(len(ls1)):
+            new_list.append(fn(ls1[i], ls2[i]))
+
+        return new_list
+    return map2
+    # raise NotImplementedError('Need to implement for Task 0.3')
 
 
 def addLists(ls1, ls2):
     "Add the elements of `ls1` and `ls2` using :func:`zipWith` and :func:`add`"
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    # raise NotImplementedError('Need to implement for Task 0.3')
+    assert len(ls1) == len(ls2)
+    zip_add = zipWith(add)
+    return zip_add(ls1, ls2)
 
 
 def reduce(fn, start):
@@ -241,16 +252,28 @@ def reduce(fn, start):
         fn(x_1, x_0)))`
     """
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    # raise NotImplementedError('Need to implement for Task 0.3')
+    def actual_reduce(list):
+        result = start
+        for x in list:
+            result = fn(result, x)
+        
+        return result
+    return actual_reduce
 
 
 def sum(ls):
     "Sum up a list using :func:`reduce` and :func:`add`."
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    # raise NotImplementedError('Need to implement for Task 0.3')
+    reduce_add = reduce(add, 0)
+    return reduce_add(ls)
 
 
 def prod(ls):
     "Product of a list using :func:`reduce` and :func:`mul`."
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    # raise NotImplementedError('Need to implement for Task 0.3')
+       
+    reduce_mul = reduce(mul, 1)
+    return reduce_mul(ls)
