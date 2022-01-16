@@ -21,13 +21,29 @@ class Module:
 
     def train(self):
         "Set the mode of this module and all descendent modules to `train`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        
+        self.training = True
+        
+        # Create queue to go through each module and set it to True
+        modules_queue = list(self.modules())
+        while modules_queue:
+            module = modules_queue.pop(0)
+            module.training = True
+            modules_queue.extend(module.modules())
+    
 
     def eval(self):
         "Set the mode of this module and all descendent modules to `eval`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        
+        self.training = False
+
+        # Create queue to go through each module and set it to False
+        modules_queue = list(self.modules())
+        while modules_queue:
+            module = modules_queue.pop(0)
+            module.training = False
+            modules_queue.extend(module.modules())
+            
 
     def named_parameters(self):
         """
@@ -35,15 +51,26 @@ class Module:
 
 
         Returns:
-            list of pairs: Contains the name and :class:`Parameter` of each ancestor parameter.
+            dict: Each name (key) and :class:`Parameter` (value) under this module.
         """
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        all_parameters = dict()
+        for key, value in self._parameters.items():
+            all_parameters[key] = value
+        
+        print("All parameters: ", all_parameters)
+        
+        for name, module in self._modules.items():
+            child_parameters = module.named_parameters()
+            for key, value in child_parameters.items():
+                new_key = f"{name}.{key}"
+                all_parameters[new_key] = value
+        return all_parameters
+
 
     def parameters(self):
         "Enumerate over all the parameters of this module and its descendents."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        return self.named_parameters().values()
+
 
     def add_parameter(self, k, v):
         """
