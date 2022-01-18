@@ -85,6 +85,7 @@ def sigmoid(x):
         float : sigmoid value
     """
     # TODO: Implement for Task 0.1.
+    
     if x >= 0:
         z = math.exp(-x)
         sig = 1 / (1 + z)
@@ -93,7 +94,6 @@ def sigmoid(x):
         z = math.exp(x)
         sig = z / (1 + z)
         return sig
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def relu(x):
@@ -110,7 +110,7 @@ def relu(x):
     """
     # TODO: Implement for Task 0.1.
     return x if x > 0 else 0
-    raise NotImplementedError('Need to implement for Task 0.1')
+    # raise NotImplementedError('Need to implement for Task 0.1')
 
 
 EPS = 1e-6
@@ -129,29 +129,33 @@ def exp(x):
 def log_back(x, d):
     r"If :math:`f = log` as above, compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
+    # raise NotImplementedError('Need to implement for Task 0.1')
+    
     return d * (1 / x)
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def inv(x):
     ":math:`f(x) = 1/x`"
     # TODO: Implement for Task 0.1.
+    # raise NotImplementedError('Need to implement for Task 0.1')
+    
     return 1 / x
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def inv_back(x, d):
     r"If :math:`f(x) = 1/x` compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
+    # raise NotImplementedError('Need to implement for Task 0.1')
+    
     return d * (-1 / x**2)
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def relu_back(x, d):
     r"If :math:`f = relu` compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
-    return 0 if x < 0 else d
-    raise NotImplementedError('Need to implement for Task 0.1')
+    # raise NotImplementedError('Need to implement for Task 0.1')
+    
+    return 0 if x < 0 else d * x
 
 
 # ## Task 0.3
