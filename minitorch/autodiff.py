@@ -274,7 +274,22 @@ class FunctionBase:
         # Tip: Note when implementing this function that
         # cls.backward may return either a value or a tuple.
         # TODO: Implement for Task 1.3.
-        raise NotImplementedError('Need to implement for Task 1.3')
+        # raise NotImplementedError('Need to implement for Task 1.3')
+        d_output = cls.backward(ctx, d_output)
+        d_output = wrap_tuple(d_output)
+        return [
+            VariableWithDeriv(inp, d_input)
+            for inp, d_input in zip(inputs, d_output)
+            if not is_constant(inp)
+        ]
+
+
+class VariableWithDeriv:
+    "Holder for a variable with it derivative."
+
+    def __init__(self, variable, deriv):
+        self.variable = variable
+        self.deriv = variable.expand(deriv)
 
 
 # Algorithms for backpropagation
@@ -297,6 +312,9 @@ def topological_sort(variable):
     """
     # TODO: Implement for Task 1.4.
     raise NotImplementedError('Need to implement for Task 1.4')
+    
+    
+
 
 
 def backpropagate(variable, deriv):
