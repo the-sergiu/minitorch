@@ -23,9 +23,34 @@ def central_difference(f, *vals, arg=0, epsilon=1e-6):
         float : An approximation of :math:`f'_i(x_0, \ldots, x_{n-1})`
     """
     # TODO: Implement for Task 1.1.
-    raise NotImplementedError('Need to implement for Task 1.1')
+    # raise NotImplementedError('Need to implement for Task 1.1')
+    x_i = vals[arg]
+    x_i_next = x_i + epsilon
+    x_i_previous = x_i - epsilon
+
+    vals_1 = []
+    vals_0 = []
+    for i in range(len(vals)):
+        if i == arg:
+            vals_1.append(x_i_next)
+            vals_0.append(x_i_previous)
+        else:
+            vals_1.append(vals[i])
+            vals_0.append(vals[i])
+
+    vals_1 = tuple(vals_1)
+    vals_0 = tuple(vals_0)
+
+    f1 = f(*vals_1)
+    f0 = f(*vals_0)
+
+    f_prime = (f1 - f0) / (2 * epsilon)
+    # pdb.set_trace()
+
+    return f_prime
 
 
+    
 # ## Task 1.2 and 1.4
 # Scalar Forward and Backward
 

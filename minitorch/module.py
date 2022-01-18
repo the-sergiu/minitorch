@@ -53,17 +53,20 @@ class Module:
         Returns:
             dict: Each name (key) and :class:`Parameter` (value) under this module.
         """
+        # print("Parameters: ", self._parameters.items())
         all_parameters = dict()
         for key, value in self._parameters.items():
             all_parameters[key] = value
         
-        print("All parameters: ", all_parameters)
-        
+        # print("All parameters: ", all_parameters)
+        # print("Modules: ", self._modules.items())
         for name, module in self._modules.items():
             child_parameters = module.named_parameters()
             for key, value in child_parameters.items():
                 new_key = f"{name}.{key}"
                 all_parameters[new_key] = value
+
+        print(all_parameters)
         return all_parameters
 
 
