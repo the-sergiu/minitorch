@@ -298,7 +298,7 @@ class ReLU(ScalarFunction):
     def forward(ctx, a):
         # TODO: Implement for Task 1.2.
 
-        ctx.save_for_backward(operators.relu(a))
+        ctx.save_for_backward(a)
         return float(operators.relu(a))
 
     @staticmethod

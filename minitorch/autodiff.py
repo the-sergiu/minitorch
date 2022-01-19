@@ -191,7 +191,9 @@ class History:
             list of numbers : a derivative with respect to `inputs`
         """
         # TODO: Implement for Task 1.4.
-        raise NotImplementedError('Need to implement for Task 1.4')
+        # raise NotImplementedError('Need to implement for Task 1.4')
+        res = self.last_fn.chain_rule(self.ctx, self.inputs, d_output)
+        return res
 
 
 class FunctionBase:
@@ -274,22 +276,9 @@ class FunctionBase:
         # Tip: Note when implementing this function that
         # cls.backward may return either a value or a tuple.
         # TODO: Implement for Task 1.3.
-        # raise NotImplementedError('Need to implement for Task 1.3')
-        d_output = cls.backward(ctx, d_output)
-        d_output = wrap_tuple(d_output)
-        return [
-            VariableWithDeriv(inp, d_input)
-            for inp, d_input in zip(inputs, d_output)
-            if not is_constant(inp)
-        ]
-
-
-class VariableWithDeriv:
-    "Holder for a variable with it derivative."
-
-    def __init__(self, variable, deriv):
-        self.variable = variable
-        self.deriv = variable.expand(deriv)
+        
+        deriv = cls.backward(ctx, d_output)
+        return [(x, y) for x, y in zip(inputs, wrap_tuple(deriv)) if not is_constant(x)]
 
 
 # Algorithms for backpropagation
@@ -311,10 +300,35 @@ def topological_sort(variable):
                             starting from the right.
     """
     # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
     
-    
+    order = []
+    visited = set()
 
+    def visit(var):
+
+        # If variable has been visited, exit recursion
+        if var.unique_id in visited:
+            return
+        
+        # If variable is not a leaf node (variable)
+        if not var.is_leaf():
+
+            # We go through its inputs and visit the non-constant variables
+            for m in var.history.inputs:
+                if not is_constant(m):
+                    visit(m)
+        
+        # We add the current variable as visited
+        visited.add(var.unique_id)
+
+        # We will insert the depth-first visited node at the beginning because as we visit more nodes
+        # and add them tot the beginning of the list, they will be "pushed" towards the end.
+        # As such, nodes closer to the end of the list will be leaf nodes.
+        # This makes sense as we are trying to get the final computational nodes to be processed first.
+        order.insert(0, var)
+
+    visit(variable)
+    return order
 
 
 def backpropagate(variable, deriv):
@@ -331,4 +345,25 @@ def backpropagate(variable, deriv):
     No return. Should write to its results to the derivative values of each leaf through `accumulate_derivative`.
     """
     # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
+    
+    # Sort the nodes topologically
+    nodes = topological_sort(variable)
+
+    # Store dict with variable id and accumulated derivative value
+    dict = {v.unique_id: 0 for v in nodes}
+    dict[variable.unique_id] = deriv
+    
+    # Iterate through nodes (starting with the nodes at the end of the computational graph)
+    for var in nodes:
+        if var.is_leaf():
+            var.accumulate_derivative(dict[var.unique_id])
+        else:
+            # We use the dict to save the accumulated derivatives of previous steps
+            for v_, deriv_ in var.history.backprop_step(dict[var.unique_id]):
+                
+                # Accumulate derivative of existing node or instantiate a 
+                # newly seen node with a newly calculated derivative
+                if v_.unique_id in dict:
+                    dict[v_.unique_id] += deriv_
+                else:
+                    dict[v_.unique_id] = deriv_

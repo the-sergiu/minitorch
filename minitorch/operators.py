@@ -14,68 +14,57 @@ def mul(x, y):
     ":math:`f(x, y) = x * y`"
     # TODO: Implement for Task 0.1.
     return x * y
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def id(x):
     ":math:`f(x) = x`"
     # TODO: Implement for Task 0.1.
     return x
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def add(x, y):
     ":math:`f(x, y) = x + y`"
     # TODO: Implement for Task 0.1.
     return x + y
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def neg(x):
     ":math:`f(x) = -x`"
     # TODO: Implement for Task 0.1.
     return -x
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def lt(x, y):
     ":math:`f(x) =` 1.0 if x is less than y else 0.0"
     # TODO: Implement for Task 0.1.
     return 1.0 if x < y else 0.0
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def eq(x, y):
     ":math:`f(x) =` 1.0 if x is equal to y else 0.0"
     # TODO: Implement for Task 0.1.
     return 1.0 if x == y else 0.0
-    raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def max(x, y):
     ":math:`f(x) =` x if x is greater than y else y"
     # TODO: Implement for Task 0.1.
     return x if x > y else y
-    # raise NotImplementedError('Need to implement for Task 0.1')
 
 
 def is_close(x, y):
     ":math:`f(x) = |x - y| < 1e-2` "
     # TODO: Implement for Task 0.1.
-    return True if abs(x - y) < 1e-2 else False
-    # raise NotImplementedError('Need to implement for Task 0.1')
+    return abs(x - y) < 1e-2
 
 
 def sigmoid(x):
     r"""
     :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}`
-
     (See `<https://en.wikipedia.org/wiki/Sigmoid_function>`_ .)
 
     Calculate as
-
     :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}` if x >=0 else :math:`\frac{e^x}{(1.0 + e^{x})}`
-
     for stability.
 
     Args:
@@ -88,18 +77,17 @@ def sigmoid(x):
     
     if x >= 0:
         z = math.exp(-x)
-        sig = 1 / (1 + z)
+        sig = 1.0 / (1.0 + z)
         return sig
     else:
         z = math.exp(x)
-        sig = z / (1 + z)
+        sig = z / (1.0 + z)
         return sig
 
 
 def relu(x):
     """
     :math:`f(x) =` x if x is greater than 0, else 0
-
     (See `<https://en.wikipedia.org/wiki/Rectifier_(neural_networks)>`_ .)
 
     Args:
@@ -109,8 +97,7 @@ def relu(x):
         float : relu value
     """
     # TODO: Implement for Task 0.1.
-    return x if x > 0 else 0
-    # raise NotImplementedError('Need to implement for Task 0.1')
+    return x if x > 0.0 else 0.0
 
 
 EPS = 1e-6
@@ -131,7 +118,7 @@ def log_back(x, d):
     # TODO: Implement for Task 0.1.
     # raise NotImplementedError('Need to implement for Task 0.1')
     
-    return d * (1 / x)
+    return d * (1.0 / x)
 
 
 def inv(x):
@@ -139,7 +126,7 @@ def inv(x):
     # TODO: Implement for Task 0.1.
     # raise NotImplementedError('Need to implement for Task 0.1')
     
-    return 1 / x
+    return 1.0 / x
 
 
 def inv_back(x, d):
@@ -155,7 +142,7 @@ def relu_back(x, d):
     # TODO: Implement for Task 0.1.
     # raise NotImplementedError('Need to implement for Task 0.1')
     
-    return 0 if x < 0 else d * x
+    return 0.0 if x < 0.0 else d
 
 
 # ## Task 0.3
