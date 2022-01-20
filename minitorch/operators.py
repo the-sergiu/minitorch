@@ -116,7 +116,6 @@ def exp(x):
 def log_back(x, d):
     r"If :math:`f = log` as above, compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
-    # raise NotImplementedError('Need to implement for Task 0.1')
     
     return d * (1.0 / x)
 
@@ -124,7 +123,6 @@ def log_back(x, d):
 def inv(x):
     ":math:`f(x) = 1/x`"
     # TODO: Implement for Task 0.1.
-    # raise NotImplementedError('Need to implement for Task 0.1')
     
     return 1.0 / x
 
@@ -132,7 +130,6 @@ def inv(x):
 def inv_back(x, d):
     r"If :math:`f(x) = 1/x` compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
-    # raise NotImplementedError('Need to implement for Task 0.1')
     
     return d * (-1 / x**2)
 
@@ -140,7 +137,6 @@ def inv_back(x, d):
 def relu_back(x, d):
     r"If :math:`f = relu` compute :math:`d \times f'(x)`"
     # TODO: Implement for Task 0.1.
-    # raise NotImplementedError('Need to implement for Task 0.1')
     
     return 0.0 if x < 0.0 else d
 
@@ -214,13 +210,11 @@ def zipWith(fn):
 
         return new_list
     return map2
-    # raise NotImplementedError('Need to implement for Task 0.3')
 
 
 def addLists(ls1, ls2):
     "Add the elements of `ls1` and `ls2` using :func:`zipWith` and :func:`add`"
     # TODO: Implement for Task 0.3.
-    # raise NotImplementedError('Need to implement for Task 0.3')
     assert len(ls1) == len(ls2)
     zip_add = zipWith(add)
     return zip_add(ls1, ls2)
@@ -243,7 +237,6 @@ def reduce(fn, start):
         fn(x_1, x_0)))`
     """
     # TODO: Implement for Task 0.3.
-    # raise NotImplementedError('Need to implement for Task 0.3')
     def actual_reduce(list):
         result = start
         for x in list:
@@ -256,15 +249,12 @@ def reduce(fn, start):
 def sum(ls):
     "Sum up a list using :func:`reduce` and :func:`add`."
     # TODO: Implement for Task 0.3.
-    # raise NotImplementedError('Need to implement for Task 0.3')
     reduce_add = reduce(add, 0)
     return reduce_add(ls)
 
 
 def prod(ls):
     "Product of a list using :func:`reduce` and :func:`mul`."
-    # TODO: Implement for Task 0.3.
-    # raise NotImplementedError('Need to implement for Task 0.3')
-       
+    # TODO: Implement for Task 0.3. 
     reduce_mul = reduce(mul, 1)
     return reduce_mul(ls)
