@@ -91,23 +91,24 @@ def shape_broadcast(shape1, shape2):
         IndexingError : if cannot broadcast
     """
     # TODO: Implement for Task 2.2.
-    shortshape,longshape=sorted([list(shape1),list(shape2)],key=len)
-    llen,slen=len(longshape),len(shortshape)
-    shortshape=[1 for i in range(llen-slen)]+shortshape
-
-    ans=[]
-    for  i in range(llen):
-        s_value,l_value=shortshape[i],longshape[i]
-        if s_value==1:
-            ans.append(l_value)
-        elif l_value==1:
-            ans.append(s_value)
-        elif s_value==l_value:
-            ans.append(l_value)
+    a, b = shape1, shape2
+    m = max(len(a), len(b))
+    # print("m",m)
+    c_rev = [0] * m
+    a_rev = list(reversed(a))
+    b_rev = list(reversed(b))
+    for i in range(m):
+        if i >= len(a):
+            c_rev[i] = b_rev[i]
+        elif i >= len(b):
+            c_rev[i] = a_rev[i]
         else:
-            raise IndexingError("Broadcast failure")
-    return tuple(ans)
-
+            c_rev[i] = max(a_rev[i], b_rev[i])
+            if a_rev[i] != c_rev[i] and a_rev[i] != 1:
+                raise IndexingError("Broadcast failure")
+            if b_rev[i] != c_rev[i] and b_rev[i] != 1:
+                raise IndexingError("Broadcast failure")
+    return tuple(reversed(c_rev))
 
 def strides_from_shape(shape):
     layout = [1]
