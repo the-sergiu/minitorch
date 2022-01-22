@@ -237,13 +237,15 @@ def reduce(fn, start):
         fn(x_1, x_0)))`
     """
     # TODO: Implement for Task 0.3.
-    def actual_reduce(list):
-        result = start
-        for x in list:
-            result = fn(result, x)
-        
-        return result
-    return actual_reduce
+    def apply(input_list):
+        my_list = list(input_list).copy()
+
+        if len(my_list) == 0:
+            return start
+        current_value = my_list.pop()
+        return fn(current_value, apply(my_list))
+
+    return apply
 
 
 def sum(ls):
