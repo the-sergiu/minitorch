@@ -97,7 +97,7 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
         class Mul(Function):
             @staticmethod
             def forward(ctx, a, b):
-                ctx.save_for_backward(a, b)
+                ctx.save_for_backward((a, b))
                 return mul_zip(a, b)
 
             @staticmethod

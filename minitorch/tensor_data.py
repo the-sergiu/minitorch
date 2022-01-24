@@ -45,12 +45,14 @@ def to_index(ordinal, shape, out_index):
 
     """
     # TODO: Implement for Task 2.1.
-    # raise NotImplementedError('Need to implement for Task 2.1')
-    strides=strides_from_shape(shape)
+    
+    # Returns tuple of strides
+    # More here: https://minitorch.github.io/tensordata.html
+    strides = strides_from_shape(shape)
     for i in range(len(strides)-1):
-        out_index[i]=ordinal//strides[i]
-        ordinal-=out_index[i]*strides[i]
-    out_index[-1]=ordinal%shape[-1]
+        out_index[i] = ordinal // strides[i]
+        ordinal -= out_index[i] * strides[i]
+    out_index[-1] = ordinal % shape[-1]
 
 
 def broadcast_index(big_index, big_shape, shape, out_index):
@@ -72,8 +74,8 @@ def broadcast_index(big_index, big_shape, shape, out_index):
     """
     # TODO: Implement for Task 2.2.
     for i in range(len(shape)):
-        offset=i+len(big_shape)-len(shape)
-        out_index[i]=big_index[offset] if shape[i]!=1 else 0
+        offset= i + len(big_shape) - len(shape)
+        out_index[i] = big_index[offset] if shape[i] != 1 else 0
 
 
 def shape_broadcast(shape1, shape2):
@@ -93,7 +95,7 @@ def shape_broadcast(shape1, shape2):
     # TODO: Implement for Task 2.2.
     a, b = shape1, shape2
     m = max(len(a), len(b))
-    # print("m",m)
+
     c_rev = [0] * m
     a_rev = list(reversed(a))
     b_rev = list(reversed(b))

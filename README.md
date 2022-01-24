@@ -37,3 +37,52 @@ Topics covered:
 * Advanced NN Functions
 
 
+# Setup
+
+
+### Clone repo
+```bash
+git clone https://github.com/the-sergiu/minitorch
+```
+
+### Install conda and create conda environment
+Python 3.7 seems to be working best.
+```bash
+conda create -n minitorch python=3.7
+```
+
+
+
+### Activate environment
+```bash
+conda deactive
+conda activate minitorch
+```
+
+### Install dependencies (except Torch)
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -r requirements.extra.txt
+python -m pip install -Ue .
+```
+
+### Install Torch and CUDA support
+Should work well, but feel free to try out newer versions of PyTorch or CUDA drivers.
+```bash
+pip3 install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+```
+
+### Verify that installation succeeded
+```bash
+python -c "import minitorch"
+python -c "import torch"
+```
+
+### Final steps
+From here, check out the official guide found above.
+
+To run tests, go to repo directory, and from the tests folder run:
+```bash
+# cd path\to\repo\minitorch\tests
+pytest
+```
