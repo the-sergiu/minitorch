@@ -18,6 +18,7 @@ from minitorch.operators import (
     log_back,
     inv_back,
     sum,
+    EPS
 )
 from hypothesis import given
 from hypothesis.strategies import lists
@@ -120,7 +121,10 @@ def test_sigmoid(a):
 def test_transitive(a, b, c):
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     # TODO: Implement for Task 0.2.
-    pass
+    if a < b and b < c and a < c:
+        assert lt(a, b)
+        assert lt(b, c)
+        assert lt(a, c)
     # raise NotImplementedError('Need to implement for Task 0.2')
 
 
@@ -150,13 +154,14 @@ def test_distribute(x, y, z):
 
 
 @pytest.mark.task0_2
-def test_other():
+@given(small_floats)
+def test_nested_inv(x):
     """
-    Write a test that ensures some other property holds for your functions.
+    Write a test that ensures the inverse of an inverse is the given number.
     """
     # None
     # TODO: Implement for Task 0.2.
-    
+    assert x + EPS == pytest.approx(inv(inv(x + EPS)))
     # raise NotImplementedError('Need to implement for Task 0.2')
 
 
